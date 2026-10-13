@@ -46,6 +46,26 @@ components/layout/
 
 ---
 
+## Prompt 3 of 5 — 2-tier color token architecture
+
+**Scope:** Replace scattered/hardcoded colors with a structured Tier 1 (reference) → Tier 2 (semantic) → component token system, integrated with Tailwind v4's `@theme inline`. Dark-mode-first; semantic names chosen so light mode can be added later without touching components. Update only the currently-mounted layout pieces (AppShell, Sidebar, SidebarItem, page.tsx); do not redesign layout or add dashboard content.
+
+**No reference screenshots attached** (same as Prompts 1 and 2). Proceeded from the written spec, consistent with the user's standing direction on this point.
+
+**Implementation:**
+- `app/globals.css` rewritten with Tier 1 reference tokens (`--ref-gray-0..1000`, `--ref-{green,blue,orange,red,yellow}-{400,500}`) and Tier 2 semantic tokens (page, surface ×7, text ×7, icon ×6, stroke ×5, action ×8, feedback ×9).
+- Prompt 1/2's legacy var names (`--background`, `--surface-1/2/3`, `--border`, `--critical`, etc.) kept as **aliases** onto the new semantic tokens, so the preserved-but-unmounted dashboard components (`components/dashboard/*`, most of `components/ui/*`) keep rendering correctly with zero edits — they're just now backed by the 2-tier system instead of their own literal values.
+- New Tailwind utilities added: `bg-page`, `bg-surface-primary/secondary/tertiary/elevated`, `text-primary/secondary/tertiary/muted`, `border-subtle/default/strong`, `bg-action-primary(-hover/-active)`, `text-action-primary-text`, `bg-action-secondary(-hover)`, existing `text-critical/warning/success/info` now sourced from the new feedback tokens.
+- `components/layout/app-shell.tsx`, `sidebar.tsx`, `sidebar-item.tsx`, and `app/page.tsx` migrated onto the new semantic utilities, replacing the Prompt 2 `bg-app-bg`/`bg-sidebar-bg`/`border-border` aliases and SidebarItem's literal `bg-[#f1f1f1]`, `text-white/50`, etc.
+
+**Known tradeoff:** Tailwind v4 generates `bg-*`/`text-*`/`border-*`/`ring-*` together from every `--color-*` token, so e.g. `--color-primary` (for the `text-primary` utility) also produces unused `bg-primary`/`border-primary` aliases. Harmless, but worth knowing before reaching for an unfamiliar utility name.
+
+**Remaining hardcoded colors (intentionally not touched):**
+1. `components/layout/sidebar.tsx:32` — logo placeholder gradient (`from-white/20 to-white/5`). Decorative one-off mark, not a semantic UI surface; same reasoning as Prompt 2.
+2. `components/dashboard/map-stage.tsx:5-6` — radial-gradient hex + rgba grid-line texture. Unmounted Prompt 1 component, out of this prompt's scope (only mounted layout pieces were in scope); still uses the legacy `border-border` alias, not yet migrated to `border-subtle`.
+
+**Status: implemented, build/lint/typecheck clean, audited for hardcoded colors. Safe to proceed to Prompt 4.**
+
 ## Requirement Traceability Matrix
 
 | Req | Source | Module | Status | Verification |
@@ -58,8 +78,13 @@ components/layout/
 | Incident detail panel | Prompt 1 | `components/dashboard/incident-panel.tsx` | Complete, preserved but unmounted | Visual |
 | Full-screen app shell (100vh, no body scroll) | Prompt 2 | `components/layout/app-shell.tsx` | Pending | — |
 | Sidebar (Prompt-2 nav, 64-72px, circular active state) | Prompt 2 | `components/layout/sidebar.tsx`, `sidebar-item.tsx` | Pending | — |
-| Main content container (empty + temp heading) | Prompt 2 | `app/page.tsx` | Pending | — |
-| Logo placeholder (30-36px, abstract) | Prompt 2 | `components/layout/sidebar.tsx` | Pending | — |
+| Main content container (empty + temp heading) | Prompt 2 | `app/page.tsx` | Complete | Visual |
+| Logo placeholder (30-36px, abstract) | Prompt 2 | `components/layout/sidebar.tsx` | Complete | Visual |
+| Tier 1 reference tokens | Prompt 3 | `app/globals.css` | Complete | Build + grep audit |
+| Tier 2 semantic tokens (page/surface/text/icon/stroke/action/feedback) | Prompt 3 | `app/globals.css` | Complete | Build + grep audit |
+| Tailwind semantic utility integration | Prompt 3 | `app/globals.css` (`@theme inline`) | Complete | Build |
+| Migrate AppShell/Sidebar/SidebarItem/page.tsx off hardcoded colors | Prompt 3 | `components/layout/*`, `app/page.tsx` | Complete | grep audit (0 remaining in mounted code) |
+| Migrate unmounted Prompt 1 dashboard components to new tokens | Prompt 3 (deferred) | `components/dashboard/*` | Not started — out of scope until reactivated | — |
 
 ## Implementation Checklist (current)
 
