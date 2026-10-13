@@ -19,17 +19,17 @@ export function IncidentPanel() {
         {incident.location}
       </div>
 
-      <div className="mt-3 flex h-32 items-center justify-center rounded-md border border-muted bg-raised text-body-sm text-quaternary">
+      <div className="mt-3 flex h-32 items-center justify-center rounded-md border border-muted bg-raised text-body-sm text-tertiary">
         Vehicle preview
       </div>
 
       <div className="mt-4">
-        <div className="mb-1.5 text-caption uppercase tracking-wide text-quaternary">Driver</div>
+        <div className="mb-1.5 text-caption uppercase tracking-wide text-tertiary">Driver</div>
         <DriverCard name={incident.driver.name} aiConciergeActive={incident.driver.aiConciergeActive} />
       </div>
 
       <div className="mt-4">
-        <div className="mb-1.5 text-caption uppercase tracking-wide text-quaternary">
+        <div className="mb-1.5 text-caption uppercase tracking-wide text-tertiary">
           Telemetry Data
         </div>
 
@@ -51,20 +51,20 @@ export function IncidentPanel() {
       <div className="mt-auto flex flex-col gap-2 pt-4">
         <button
           type="button"
-          className="rounded-md bg-action-primary py-2 text-label-md font-medium text-action-primary-content transition-opacity duration-200 hover:opacity-90"
+          className="rounded-md bg-action-primary py-2 text-label-md font-medium text-action-primary-content transition-opacity duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-container"
         >
           Confirm Evacuation
         </button>
         <div className="flex gap-2">
           <button
             type="button"
-            className="flex-1 rounded-md border border-muted py-2 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised"
+            className="flex-1 rounded-md border border-muted py-2 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             View Profile
           </button>
           <button
             type="button"
-            className="flex-1 rounded-md border border-muted py-2 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised"
+            className="flex-1 rounded-md border border-muted py-2 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             Insurance Claim
           </button>
