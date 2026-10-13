@@ -10,16 +10,6 @@ export const healthSummary = {
   critical: 1,
 };
 
-export const filterChips: { label: string; count: number }[] = [
-  { label: "All", count: 54 },
-  { label: "Critical", count: 1 },
-  { label: "Warning", count: 25 },
-  { label: "Info", count: 23 },
-  { label: "Open", count: 48 },
-  { label: "In Progress", count: 1 },
-  { label: "Today", count: 49 },
-];
-
 export interface ActionRow {
   id: string;
   severity: Severity;
