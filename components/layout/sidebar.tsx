@@ -26,7 +26,7 @@ export function Sidebar() {
   const [active, setActive] = useState(0);
 
   return (
-    <aside className="flex h-full w-[68px] flex-shrink-0 flex-col items-center border-r border-subtle bg-page py-4">
+    <aside className="flex h-full w-[68px] flex-shrink-0 flex-col items-center border-r border-muted bg-container py-4">
       <div
         aria-hidden
         className="mb-6 h-8 w-8 rounded-lg bg-gradient-to-br from-white/20 to-white/5"
