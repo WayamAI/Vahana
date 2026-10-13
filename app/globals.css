@@ -451,3 +451,26 @@ body {
 * {
   border-color: var(--stroke-muted);
 }
+
+/* Themed scrollbars — otherwise the OS/browser default (often a stark
+   light gray on Windows/Firefox) clashes with the dark surface system. */
+* {
+  scrollbar-color: var(--surface-scroll-bar) transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--surface-scroll-bar);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
