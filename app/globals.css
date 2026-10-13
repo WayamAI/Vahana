@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  --app-bg: #080a0b;
+  --sidebar-bg: #0c0e0f;
+
   --background: #090b0c;
   --surface-1: #111314;
   --surface-2: #17191a;
@@ -32,6 +35,9 @@
 }
 
 @theme inline {
+  --color-app-bg: var(--app-bg);
+  --color-sidebar-bg: var(--sidebar-bg);
+
   --color-background: var(--background);
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
