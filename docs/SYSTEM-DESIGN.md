@@ -140,13 +140,35 @@ components/layout/
 | Migrate Sidebar/SidebarItem off Lucide | Prompt 5 | `components/layout/sidebar.tsx`, `sidebar-item.tsx` | Complete | grep audit (0 Lucide imports in mounted code) |
 | Migrate unmounted Prompt 1 components to AppIcon/Font Awesome | Prompt 5 (deferred) | `components/dashboard/*`, `components/ui/{driver,status-badge,metric}-card.tsx`, `components/ui/sidebar-item.tsx` (the other one) | Not started — out of scope until reactivated | — |
 
-## Consolidated status after all 5 prompts
+## Consolidated status after all 5 prompts (superseded — see Chronos/branding pass below)
 
 All 5 system design prompts have now been reviewed and implemented in sequence. Summary:
 - **Mounted UI** (`AppShell`, `Sidebar`, `SidebarItem`, `app/page.tsx`): fully implements Prompts 2-5 — app shell, sidebar, 2-tier color tokens (now on the Prompt 4 palette), Michroma/Geist typography, and the Font Awesome icon system. Zero hardcoded colors, zero Lucide imports, zero emoji.
 - **Unmounted dashboard content** (`components/dashboard/*`, most of `components/ui/*`): Prompt 1's full dashboard (map, health score, action table, incident panel) is preserved on disk but not rendered, per the Prompt 2 decision. It still uses Lucide icons, the Prompt 1 token names (now aliased through to Prompt 4's palette, so it still renders correctly if reactivated), and hasn't been migrated to the new type scale or icon system.
 - **No prompt has had a reference screenshot attached** — every visual decision across all 5 prompts was made from written specs alone.
 - **Next step, if dashboard content is to return:** migrate `components/dashboard/*` and the remaining `components/ui/*` files onto the Prompt 4 token names and Prompt 5 icon system directly (rather than relying on the legacy alias chain), then re-mount `<DashboardShell>` (or its successor) from `app/page.tsx`.
+
+---
+
+## Chronos study + Wayam AI branding + dashboard reactivation (post-5-prompt pass)
+
+This pass completed the "next step" above: the full Prompt 1 dashboard was migrated onto the current (Prompt 4/5) token and icon system and reactivated, Chronos (`/Users/arkabera/Desktop/mriganko da/Chronos`) was studied as a structural/visual reference (full inventory in `docs/CHRONOS-REFERENCE.md`), and official Wayam AI branding was integrated.
+
+**Branding assets** (sourced from `/Users/arkabera/Desktop/Wayam AI/AIDLC Wayam All assets`, the canonical shared brand folder — identified by inspecting actual SVG fill colors, not filenames, since several similarly-named files existed across other Wayam AI product folders):
+- `public/brand/wayam-icon.svg` — icon-only mark, used as the sidebar brand icon (`components/layout/sidebar.tsx`) and the browser favicon (`app/icon.svg`, Next.js metadata-file convention, confirmed served at `/icon.svg` in the build output).
+- `public/brand/wayam-wordmark-dark-bg.svg` / `wayam-wordmark-light-bg.svg` — full wordmark variants, copied for completeness but not yet placed anywhere (no login screen, footer, or other full-wordmark-sized surface exists yet in Vahana's current single-page shell).
+- Page metadata (`app/layout.tsx`) now reads "Vahana | Wayam AI" — Vahana is not renamed.
+- Verified at runtime: `npm run build` + `npm run start`, confirmed `/brand/wayam-icon.svg` returns 200/304 in the network log, zero console errors, tab title shows the branded title.
+
+**Dashboard reactivation**: all of Prompt 1's dashboard components (`DashboardHeader`, `MapStage`, `HealthScoreCard`, `ActionQueue`/`ActionTable`, `IncidentPanel`, `StatusBadge`, `MetricCard`, `DriverCard`) migrated off Lucide onto `AppIcon`/Font Awesome and off the Prompt 1 legacy token names onto the Prompt 4 semantic tokens and type scale, then re-mounted from `app/page.tsx` inside the existing `AppShell`. The duplicate Prompt 1 sidebar (`components/dashboard/sidebar.tsx`, `components/ui/sidebar-item.tsx`) was deleted as dead code, fully superseded by `components/layout/*` since Prompt 2.
+
+**Honesty fix**: the `filterChips` array had hardcoded counts (All 54, Critical 1, Warning 25, Info 23, Open 48, In Progress 1, Today 49) describing a dataset far larger than the 6 actual placeholder rows, with no underlying fields for the Open/In Progress/Today filters. Replaced with chip counts computed live from the actual row data, and dropped the filters with no backing field — avoids wiring "real" interactions against numbers that would never have matched what the table shows.
+
+**Real (not decorative) interactions added**: search (filters by asset/description/driver), severity filter chips (now actually filter the row set), column sort (Asset/Time, 3-state cycle with a chevron indicator), row selection (individual + select-all with indeterminate state), and a real empty state when a filter/search yields zero rows. All operate on the existing mock `actionRows` array — genuinely functional frontend behavior, clearly scoped to placeholder data since no backend exists yet (see `lib/placeholder-data.ts`'s header comment).
+
+**Verification**: `npm run build`, `npm run lint`, `npx tsc --noEmit` all pass. Visually verified in both dev and production (`next start`) builds — search, sort, and filter interactions tested live in-browser and confirmed working. Grep audit across `components/` and `app/`: zero Lucide imports, zero emoji, zero hardcoded colors outside `MapStage`'s deliberately-exempted placeholder texture gradient.
+
+**Not done / explicitly out of scope**: no backend exists, so no real API integration was attempted — all data remains clearly-labeled placeholder. Pagination and the column-visibility/drag-reorder/CSV-export features from Chronos's full `data-table.tsx` were not added (disproportionate to a 6-row placeholder dataset, flagged in `docs/CHRONOS-REFERENCE.md` as a future addition once real data justifies it). No login/auth screen exists in Vahana yet, so the wordmark variants aren't placed anywhere beyond being copied into `public/brand/`.
 
 ## Requirement Traceability Matrix
 
