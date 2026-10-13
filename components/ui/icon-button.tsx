@@ -27,6 +27,8 @@ interface IconButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 
   variant?: "ghost" | "subtle" | "inverse";
   size?: "sm" | "md" | "lg";
   iconSize?: IconSize;
+  /** "rounded" (8-10px, standard toolbar/control) or "circle" (sidebar items). */
+  shape?: "rounded" | "circle";
 }
 
 export function IconButton({
@@ -35,6 +37,7 @@ export function IconButton({
   variant = "ghost",
   size = "md",
   iconSize,
+  shape = "rounded",
   className = "",
   ...props
 }: IconButtonProps) {
@@ -43,7 +46,7 @@ export function IconButton({
       type="button"
       aria-label={label}
       title={label}
-      className={`inline-flex flex-shrink-0 items-center justify-center rounded-[10px] transition-colors duration-200 ${CONTAINER_SIZE[size]} ${VARIANT_CLASS[variant]} ${className}`}
+      className={`inline-flex flex-shrink-0 items-center justify-center transition-colors duration-200 ${shape === "circle" ? "rounded-full" : "rounded-[10px]"} ${CONTAINER_SIZE[size]} ${VARIANT_CLASS[variant]} ${className}`}
       {...props}
     >
       <AppIcon name={icon} size={iconSize ?? DEFAULT_ICON_SIZE[size]} aria-hidden />
