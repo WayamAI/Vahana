@@ -14,7 +14,7 @@ export function HealthScoreCard() {
         </div>
         <button
           type="button"
-          className="flex items-center gap-1 rounded-md border border-muted px-2 py-1 text-caption text-secondary hover:bg-raised"
+          className="flex items-center gap-1 rounded-md border border-muted px-2 py-1 text-caption text-secondary hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           Today
           <AppIcon name="chevronDown" size="xs" aria-hidden />
@@ -22,8 +22,11 @@ export function HealthScoreCard() {
       </div>
 
       <div className="mt-2 flex items-baseline gap-2">
-        <span className="font-display text-display-metric text-primary tabular-nums">
-          {score}%
+        <span className="flex items-baseline text-primary tabular-nums">
+          <span className="font-display text-display-metric">{score}</span>
+          {/* Michroma's "%" glyph renders ambiguously (looks like deg-slash-o) —
+              the unit suffix uses Geist instead, a standard numeral/unit font split. */}
+          <span className="font-sans text-heading-md">%</span>
         </span>
         <span className="flex items-center gap-0.5 text-label-sm text-success">
           <AppIcon name="arrowUp" size="xs" aria-hidden />
@@ -54,7 +57,7 @@ export function HealthScoreCard() {
 
       <button
         type="button"
-        className="mt-3 w-full rounded-md border border-muted py-1.5 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised hover:text-primary"
+        className="mt-3 w-full rounded-md border border-muted py-1.5 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
       >
         See all assets
       </button>
