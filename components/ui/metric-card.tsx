@@ -17,7 +17,7 @@ export function MetricCard({
 }) {
   return (
     <div className="rounded-md border border-muted bg-raised px-3 py-2.5">
-      <div className="text-caption uppercase tracking-wide text-quaternary">{label}</div>
+      <div className="text-caption uppercase tracking-wide text-tertiary">{label}</div>
       <div className={`mt-1 text-body-sm font-semibold tabular-nums ${VALUE_CLASS[severity]}`}>
         {value}
       </div>
