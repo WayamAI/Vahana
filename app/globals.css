@@ -268,6 +268,21 @@
 }
 
 /* ==========================================================================
+   ICONOGRAPHY TOKENS
+   Font Awesome (solid, for consistent visual weight — see lib/icons.ts).
+   Sizes apply as inline width/height on the AppIcon primitive.
+   ========================================================================== */
+:root {
+  --icon-size-xs: 12px;
+  --icon-size-sm: 14px;
+  --icon-size-md: 16px;
+  --icon-size-lg: 18px;
+  --icon-size-xl: 20px;
+  --icon-size-2xl: 24px;
+  --icon-size-3xl: 28px;
+}
+
+/* ==========================================================================
    TYPOGRAPHY TOKENS
    Michroma (display/identity) and Geist (functional UI) are distinct
    families with distinct responsibilities — see docs/SYSTEM-DESIGN.md.
@@ -322,6 +337,9 @@
   --color-action-primary-focused: var(--action-primary-focused);
   --color-action-primary-disabled: var(--action-primary-disabled);
   --color-action-primary-content: var(--action-primary-content);
+
+  --color-action-tertiary-hover: var(--action-tertiary-hover);
+  --color-action-tertiary-active: var(--action-tertiary-focused);
 
   --color-success: var(--feedback-success-content);
   --color-success-icon: var(--feedback-success-icon);
