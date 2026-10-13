@@ -331,6 +331,7 @@
   --color-active: var(--stroke-active);
   --color-muted: var(--stroke-muted);
   --color-disabled: var(--stroke-disabled);
+  --color-focus: var(--stroke-focus);
 
   --color-action-primary: var(--action-primary-default);
   --color-action-primary-hover: var(--action-primary-hover);
