@@ -2,7 +2,7 @@
 
 This document is the running record of all system design prompts supplied for Vahana, their requirements, conflicts, and implementation status. Updated after every prompt per project rules established 2026-10-13.
 
-No reference screenshots have been attached to any prompt so far (Prompts 1 through 4). All visual work is derived from written specs only. This is a standing limitation, not a resolved issue — flag again if a future prompt also omits its image.
+No reference screenshots have been attached to any prompt so far (Prompts 1 through 5). All visual work is derived from written specs only. This is a standing limitation, not a resolved issue — flag again if a future prompt also omits its image.
 
 ---
 
@@ -89,6 +89,25 @@ components/layout/
 
 **Status: implemented, build/lint/typecheck clean, visually verified (page essentially black, sidebar barely elevated, active nav = light-gray/dark-icon, hover = subtle raised, Michroma renders distinctly from Geist). Safe to proceed to Prompt 5.**
 
+## Prompt 5 of 5 — Iconography system
+
+**Scope:** Central icon registry on Font Awesome, an `AppIcon` primitive, an `IconButton` with ghost/subtle/inverse variants, an icon size scale, and migrating AppShell/Sidebar/SidebarItem/utility buttons off ad hoc icon imports. No layout, typography, or color-architecture changes except where needed to consume existing semantic icon tokens.
+
+**No reference screenshot attached** (5th prompt in a row without one). Proceeded from the written spec.
+
+**Conflict/constraint identified — Font Awesome Free has no usable thin/light outline style for most needed glyphs:** the brief asks for "thin outlined" icons and names Font Awesome as the source, but Free's "regular" style (the only non-solid free style) only covers ~160 glyphs — mostly literal objects (house, bell, calendar, file, envelope, cloud, map, trash-can) — and has no equivalent for gauge, car, wrench, arrows, chevrons, magnifying-glass, or most of this registry's other needs. True thin/light/duotone weight is Pro-only. Per the brief's own rule 12 ("visual consistency is more important" than matching a literal weight when a style isn't available everywhere), the registry standardizes on **solid** throughout rather than mixing solid and regular and producing inconsistent icon weight. Documented in `lib/icons.ts` and here rather than silently picking regular-where-available.
+
+**Implementation:**
+- Installed `@fortawesome/fontawesome-svg-core`, `@fortawesome/free-solid-svg-icons`, `@fortawesome/free-regular-svg-icons` (installed for completeness/future use, not currently consumed), `@fortawesome/react-fontawesome`. Font Awesome wasn't previously installed.
+- `lib/icons.ts`: named-import-only registry (50 semantic names), `IconName = keyof typeof icons` for autocomplete/type safety.
+- `app/globals.css`: `--icon-size-xs..3xl` (12-28px) scale; new `bg-action-tertiary-hover`/`-active` Tailwind aliases (the ghost `IconButton` variant needed CSS vars Prompt 4 defined but never exposed to Tailwind).
+- `components/ui/app-icon.tsx`: the `AppIcon` primitive — `name`/`size`/`className`/`tone`/`aria-hidden`/`aria-label`, `inline-flex flex-shrink-0` for optical alignment.
+- `components/ui/icon-button.tsx`: rebuilt from scratch (the old children-based version had zero call sites anywhere in the codebase, so nothing broke) with `icon`/`label`/`variant`(ghost\|subtle\|inverse)/`size`(sm 32\|md 36\|lg 40)/`iconSize`/`shape`(rounded 10px\|circle).
+- `components/layout/sidebar-item.tsx`: now a thin `IconButton` wrapper (`variant=inverse` active / `subtle` inactive, `shape=circle`, `iconSize=lg`) instead of reimplementing button styling.
+- `components/layout/sidebar.tsx`: nav list now references semantic icon names instead of importing Lucide components directly. "Alerts" → `warning`, "Documents" → `document`, per the spec's suggested sidebar mapping.
+
+**Status: implemented, build/lint/typecheck clean, visually verified (consistent solid weight, active/inactive/hover states correct, theme-toggle glyph renders). Lucide is now fully absent from mounted code — confined to the still-unmounted Prompt 1 dashboard components. Last of the 5 prompts — see the consolidated summary below.**
+
 ## Requirement Traceability Matrix
 
 | Req | Source | Module | Status | Verification |
@@ -114,6 +133,22 @@ components/layout/
 | Geist confirmed as functional UI font | Prompt 4 | `app/layout.tsx` (pre-existing) | Complete | Visual |
 | Semantic type scale (display/heading/body/label/caption) | Prompt 4 | `app/globals.css` | Complete | Build; only `display-page` applied so far (temp heading) |
 | Migrate AppShell/Sidebar/SidebarItem/page.tsx to Prompt 4 tokens | Prompt 4 | `components/layout/*`, `app/page.tsx` | Complete | grep audit (0 hardcoded colors in mounted code) |
+| Font Awesome install + icon registry | Prompt 5 | `lib/icons.ts` | Complete | Build + node existence checks |
+| AppIcon primitive | Prompt 5 | `components/ui/app-icon.tsx` | Complete | Build + visual |
+| IconButton (ghost/subtle/inverse) | Prompt 5 | `components/ui/icon-button.tsx` | Complete | Build + visual (sidebar uses subtle/inverse) |
+| Icon size scale | Prompt 5 | `app/globals.css` | Complete | Build |
+| Migrate Sidebar/SidebarItem off Lucide | Prompt 5 | `components/layout/sidebar.tsx`, `sidebar-item.tsx` | Complete | grep audit (0 Lucide imports in mounted code) |
+| Migrate unmounted Prompt 1 components to AppIcon/Font Awesome | Prompt 5 (deferred) | `components/dashboard/*`, `components/ui/{driver,status-badge,metric}-card.tsx`, `components/ui/sidebar-item.tsx` (the other one) | Not started — out of scope until reactivated | — |
+
+## Consolidated status after all 5 prompts
+
+All 5 system design prompts have now been reviewed and implemented in sequence. Summary:
+- **Mounted UI** (`AppShell`, `Sidebar`, `SidebarItem`, `app/page.tsx`): fully implements Prompts 2-5 — app shell, sidebar, 2-tier color tokens (now on the Prompt 4 palette), Michroma/Geist typography, and the Font Awesome icon system. Zero hardcoded colors, zero Lucide imports, zero emoji.
+- **Unmounted dashboard content** (`components/dashboard/*`, most of `components/ui/*`): Prompt 1's full dashboard (map, health score, action table, incident panel) is preserved on disk but not rendered, per the Prompt 2 decision. It still uses Lucide icons, the Prompt 1 token names (now aliased through to Prompt 4's palette, so it still renders correctly if reactivated), and hasn't been migrated to the new type scale or icon system.
+- **No prompt has had a reference screenshot attached** — every visual decision across all 5 prompts was made from written specs alone.
+- **Next step, if dashboard content is to return:** migrate `components/dashboard/*` and the remaining `components/ui/*` files onto the Prompt 4 token names and Prompt 5 icon system directly (rather than relying on the legacy alias chain), then re-mount `<DashboardShell>` (or its successor) from `app/page.tsx`.
+
+## Requirement Traceability Matrix
 
 ## Implementation Checklist (current)
 
