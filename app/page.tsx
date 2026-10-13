@@ -7,7 +7,7 @@ import { AppShell } from "@/components/layout/app-shell";
 export default function Home() {
   return (
     <AppShell>
-      <h1 className="px-6 pt-6 text-2xl font-medium text-text-primary">Dashboard</h1>
+      <h1 className="px-6 pt-6 text-2xl font-medium text-primary">Dashboard</h1>
     </AppShell>
   );
 }
