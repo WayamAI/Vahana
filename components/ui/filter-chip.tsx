@@ -13,7 +13,7 @@ export function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-label-sm transition-colors duration-200 ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-label-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-container ${
         active
           ? "border-transparent bg-action-primary text-on-color"
           : "border-muted bg-action text-tertiary hover:border-default hover:bg-raised-2"

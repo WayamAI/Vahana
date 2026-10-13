@@ -46,7 +46,7 @@ export function IconButton({
       type="button"
       aria-label={label}
       title={label}
-      className={`inline-flex flex-shrink-0 items-center justify-center transition-colors duration-200 ${shape === "circle" ? "rounded-full" : "rounded-[10px]"} ${CONTAINER_SIZE[size]} ${VARIANT_CLASS[variant]} ${className}`}
+      className={`inline-flex flex-shrink-0 items-center justify-center transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-page ${shape === "circle" ? "rounded-full" : "rounded-[10px]"} ${CONTAINER_SIZE[size]} ${VARIANT_CLASS[variant]} ${className}`}
       {...props}
     >
       <AppIcon name={icon} size={iconSize ?? DEFAULT_ICON_SIZE[size]} aria-hidden />
