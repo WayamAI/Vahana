@@ -13,14 +13,14 @@ export function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors duration-200 ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-label-sm transition-colors duration-200 ${
         active
-          ? "border-border-strong bg-surface-3 text-text-primary"
-          : "border-border bg-surface-1 text-text-secondary hover:bg-surface-2"
+          ? "border-transparent bg-action-primary text-on-color"
+          : "border-muted bg-action text-tertiary hover:border-default hover:bg-raised-2"
       }`}
     >
       {label}
-      <span className="tabular-nums text-text-muted">{count}</span>
+      <span className="tabular-nums opacity-70">{count}</span>
     </button>
   );
 }
