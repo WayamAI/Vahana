@@ -1,26 +1,22 @@
-import type { LucideIcon } from "lucide-react";
+import { IconButton } from "@/components/ui/icon-button";
+import type { IconName } from "@/lib/icons";
 
 interface SidebarItemProps {
-  icon: LucideIcon;
+  icon: IconName;
   label: string;
   active?: boolean;
   onClick?: () => void;
 }
 
-export function SidebarItem({ icon: Icon, label, active, onClick }: SidebarItemProps) {
+export function SidebarItem({ icon, label, active, onClick }: SidebarItemProps) {
   return (
-    <button
-      type="button"
+    <IconButton
+      icon={icon}
+      label={label}
       onClick={onClick}
-      aria-label={label}
-      title={label}
-      className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200 ${
-        active
-          ? "bg-action-primary text-icon-on-color"
-          : "bg-action text-icon-tertiary hover:bg-raised hover:text-icon-secondary"
-      }`}
-    >
-      <Icon size={17} strokeWidth={1.75} />
-    </button>
+      variant={active ? "inverse" : "subtle"}
+      shape="circle"
+      iconSize="lg"
+    />
   );
 }

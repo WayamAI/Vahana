@@ -1,25 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import {
-  LayoutDashboard,
-  Car,
-  TriangleAlert,
-  CalendarDays,
-  Wrench,
-  FileText,
-  Settings,
-  SunMoon,
-} from "lucide-react";
 import { SidebarItem } from "@/components/layout/sidebar-item";
+import type { IconName } from "@/lib/icons";
 
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard" },
-  { icon: Car, label: "Vehicles" },
-  { icon: TriangleAlert, label: "Alerts" },
-  { icon: CalendarDays, label: "Calendar" },
-  { icon: Wrench, label: "Maintenance" },
-  { icon: FileText, label: "Documents" },
+const NAV_ITEMS: { icon: IconName; label: string }[] = [
+  { icon: "dashboard", label: "Dashboard" },
+  { icon: "vehicle", label: "Vehicles" },
+  { icon: "warning", label: "Alerts" },
+  { icon: "calendar", label: "Calendar" },
+  { icon: "maintenance", label: "Maintenance" },
+  { icon: "document", label: "Documents" },
 ];
 
 export function Sidebar() {
@@ -45,8 +36,8 @@ export function Sidebar() {
       </nav>
 
       <div className="flex flex-col items-center gap-2">
-        <SidebarItem icon={SunMoon} label="Theme" />
-        <SidebarItem icon={Settings} label="Settings" />
+        <SidebarItem icon="theme" label="Theme" />
+        <SidebarItem icon="settings" label="Settings" />
       </div>
     </aside>
   );
