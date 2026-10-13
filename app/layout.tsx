@@ -19,8 +19,8 @@ const michroma = Michroma({
 });
 
 export const metadata: Metadata = {
-  title: "Vahana",
-  description: "Connected-vehicle fleet command center",
+  title: "Vahana | Wayam AI",
+  description: "Connected-vehicle fleet command center, by Wayam AI",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
