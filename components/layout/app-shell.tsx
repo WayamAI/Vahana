@@ -5,7 +5,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-page">
       <Sidebar />
-      <main className="min-w-0 flex-1 overflow-y-auto bg-page">{children}</main>
+      <main className="flex min-w-0 flex-1 overflow-hidden bg-page">{children}</main>
     </div>
   );
 }
