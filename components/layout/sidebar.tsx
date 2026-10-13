@@ -18,10 +18,8 @@ export function Sidebar() {
 
   return (
     <aside className="flex h-full w-[68px] flex-shrink-0 flex-col items-center border-r border-muted bg-container py-4">
-      <div
-        aria-hidden
-        className="mb-6 h-8 w-8 rounded-lg bg-gradient-to-br from-white/20 to-white/5"
-      />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/brand/wayam-icon.svg" alt="Wayam AI" className="mb-6 h-8 w-8 rounded-lg" />
 
       <nav className="flex flex-1 flex-col items-center gap-2">
         {NAV_ITEMS.map((item, i) => (
