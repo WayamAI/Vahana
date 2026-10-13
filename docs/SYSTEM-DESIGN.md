@@ -65,11 +65,13 @@ components/layout/
 
 - [x] Prompt 1 dashboard foundation
 - [x] Document Prompt 1 + Prompt 2 retroactively/live, log conflicts
-- [ ] Build `components/layout/app-shell.tsx`
-- [ ] Build `components/layout/sidebar-item.tsx` (Prompt-2 sizing/color spec)
-- [ ] Build `components/layout/sidebar.tsx` (Prompt-2 nav list + logo placeholder)
-- [ ] Add `--app-bg`/`--sidebar-bg` tokens
-- [ ] Update `app/page.tsx` to render `AppShell` with temp heading only
-- [ ] Verify build/lint/visual
+- [x] Build `components/layout/app-shell.tsx`
+- [x] Build `components/layout/sidebar-item.tsx` (Prompt-2 sizing/color spec)
+- [x] Build `components/layout/sidebar.tsx` (Prompt-2 nav list + logo placeholder)
+- [x] Add `--app-bg`/`--sidebar-bg` tokens
+- [x] Update `app/page.tsx` to render `AppShell` with temp heading only
+- [x] Verify build/lint/visual (desktop, 1440px — confirmed matches Prompt 2 intent)
 - [ ] Configure `origin` remote to `https://github.com/WayamAI/Vahana.git` and push
 - [ ] Await Prompts 3, 4, 5 before any further consolidation or "complete" claims
+
+**Prompt 2 status: implemented, verified on desktop, committed. Safe to proceed to Prompt 3.**
