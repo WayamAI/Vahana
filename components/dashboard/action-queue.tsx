@@ -53,11 +53,11 @@ export function ActionQueue() {
   return (
     <section className="rounded-lg border border-muted bg-container">
       <div className="flex items-center justify-between gap-3 px-4 py-3.5">
-        <h2 className="text-heading-sm text-primary">
+        <h2 className="min-w-0 flex-shrink truncate text-heading-sm text-primary">
           Action Needed Queue{" "}
-          <span className="tabular-nums text-quaternary">({actionRows.length})</span>
+          <span className="tabular-nums text-tertiary">({actionRows.length})</span>
         </h2>
-        <div className="relative w-full max-w-[12rem]">
+        <div className="relative w-full max-w-[12rem] flex-shrink-0">
           <AppIcon
             name="search"
             size="xs"
@@ -71,7 +71,7 @@ export function ActionQueue() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search"
             aria-label="Search action queue"
-            className="h-8 w-full rounded-full border border-muted bg-action py-1 pr-3 pl-8 text-label-sm text-secondary placeholder:text-quaternary focus:border-default focus:outline-none"
+            className="h-8 w-full rounded-full border border-muted bg-action py-1 pr-3 pl-8 text-label-sm text-secondary placeholder:text-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           />
         </div>
       </div>
