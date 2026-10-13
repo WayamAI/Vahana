@@ -1,30 +1,143 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   TIER 1 — REFERENCE TOKENS
+   Raw design values. Nothing outside this block should hold a literal
+   hex/rgb color. Components must never reference these directly — only
+   semantic tokens (Tier 2, below) may consume them.
+   ========================================================================== */
 :root {
-  --app-bg: #080a0b;
-  --sidebar-bg: #0c0e0f;
+  /* Neutral grayscale */
+  --ref-gray-0: #ffffff;
+  --ref-gray-50: #f4f4f4;
+  --ref-gray-100: #e5e5e5;
+  --ref-gray-200: #d4d4d4;
+  --ref-gray-300: #b8b8b8;
+  --ref-gray-400: #969696;
+  --ref-gray-500: #737373;
+  --ref-gray-600: #525252;
+  --ref-gray-700: #383838;
+  --ref-gray-800: #252525;
+  --ref-gray-850: #1c1c1c;
+  --ref-gray-900: #151515;
+  --ref-gray-925: #111111;
+  --ref-gray-950: #0b0b0b;
+  --ref-gray-975: #070707;
+  --ref-gray-1000: #000000;
 
-  --background: #090b0c;
-  --surface-1: #111314;
-  --surface-2: #17191a;
-  --surface-3: #1d1f20;
-  --surface-hover: #202224;
+  /* Status — kept desaturated, used sparingly */
+  --ref-green-400: #4fc16e;
+  --ref-green-500: #31a354;
 
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.11);
+  --ref-blue-400: #4c9aff;
+  --ref-blue-500: #2979ff;
 
-  --text-primary: rgba(255, 255, 255, 0.95);
-  --text-secondary: rgba(255, 255, 255, 0.58);
-  --text-muted: rgba(255, 255, 255, 0.35);
+  --ref-orange-400: #ff9f43;
+  --ref-orange-500: #f47b20;
 
-  --critical: #f2545b;
-  --critical-bg: rgba(242, 84, 91, 0.12);
-  --warning: #e3a248;
-  --warning-bg: rgba(227, 162, 72, 0.12);
-  --info: #7b8794;
-  --info-bg: rgba(123, 135, 148, 0.14);
-  --success: #4caf7d;
-  --success-bg: rgba(76, 175, 125, 0.12);
+  --ref-red-400: #ff5a52;
+  --ref-red-500: #e83b36;
+
+  --ref-yellow-400: #f4c94c;
+  --ref-yellow-500: #d9a81e;
+}
+
+/* ==========================================================================
+   TIER 2 — SEMANTIC TOKENS (dark mode, default)
+   Describe what a color DOES, not what it is. Components consume only
+   these. Dark mode is the only implemented mode today; a future
+   `:root[data-theme="light"]` block can remap these same names without
+   touching a single component.
+   ========================================================================== */
+:root {
+  /* Page */
+  --page-background: var(--ref-gray-1000);
+  --page-background-subtle: var(--ref-gray-975);
+
+  /* Surface hierarchy */
+  --surface-primary: var(--ref-gray-950);
+  --surface-secondary: var(--ref-gray-925);
+  --surface-tertiary: var(--ref-gray-900);
+  --surface-elevated: var(--ref-gray-850);
+  --surface-hover: var(--ref-gray-850);
+  --surface-active: var(--ref-gray-800);
+  --surface-disabled: var(--ref-gray-950);
+
+  /* Text */
+  --text-primary: var(--ref-gray-50);
+  --text-secondary: var(--ref-gray-300);
+  --text-tertiary: var(--ref-gray-400);
+  --text-muted: var(--ref-gray-500);
+  --text-disabled: var(--ref-gray-600);
+  --text-on-color: var(--ref-gray-0);
+  --text-on-light: var(--ref-gray-950);
+
+  /* Icon — follows the same hierarchy as text; icons are colored via the
+     text-* utilities below (SVGs use currentColor), so no separate
+     Tailwind aliases are generated for these. */
+  --icon-primary: var(--ref-gray-50);
+  --icon-secondary: var(--ref-gray-300);
+  --icon-tertiary: var(--ref-gray-400);
+  --icon-muted: var(--ref-gray-500);
+  --icon-disabled: var(--ref-gray-600);
+  --icon-on-light: var(--ref-gray-950);
+
+  /* Stroke / border — mostly invisible until you look for it */
+  --stroke-subtle: rgba(255, 255, 255, 0.06);
+  --stroke-default: rgba(255, 255, 255, 0.1);
+  --stroke-strong: rgba(255, 255, 255, 0.16);
+  --stroke-hover: rgba(255, 255, 255, 0.22);
+  --stroke-focus: rgba(255, 255, 255, 0.32);
+
+  /* Action — light-gray-on-dark primary, never blue */
+  --action-primary: var(--ref-gray-50);
+  --action-primary-hover: var(--ref-gray-100);
+  --action-primary-active: var(--ref-gray-200);
+  --action-primary-text: var(--ref-gray-950);
+
+  --action-secondary: var(--surface-tertiary);
+  --action-secondary-hover: var(--surface-elevated);
+  --action-secondary-text: var(--text-primary);
+
+  --action-disabled: var(--surface-disabled);
+
+  /* Feedback */
+  --feedback-success: var(--ref-green-400);
+  --feedback-success-subtle: rgba(79, 193, 110, 0.12);
+
+  --feedback-info: var(--ref-blue-400);
+  --feedback-info-subtle: rgba(76, 154, 255, 0.12);
+
+  --feedback-warning: var(--ref-orange-400);
+  --feedback-warning-subtle: rgba(255, 159, 67, 0.12);
+
+  --feedback-critical: var(--ref-red-400);
+  --feedback-critical-subtle: rgba(255, 90, 82, 0.12);
+
+  --feedback-highlight: var(--ref-yellow-400);
+
+  /* ------------------------------------------------------------------
+     Legacy aliases (Prompt 1/2) — kept so the preserved-but-unmounted
+     dashboard components (components/dashboard/*, components/ui/*) keep
+     rendering correctly without edits. They now resolve through the
+     2-tier system above instead of holding their own literal values.
+     Migrate those components onto the semantic names directly the next
+     time they're brought back into page.tsx, then delete this block.
+     ------------------------------------------------------------------ */
+  --background: var(--page-background);
+  --surface-1: var(--surface-secondary);
+  --surface-2: var(--surface-tertiary);
+  --surface-3: var(--surface-elevated);
+  --border: var(--stroke-subtle);
+  --border-strong: var(--stroke-default);
+  --critical: var(--feedback-critical);
+  --critical-bg: var(--feedback-critical-subtle);
+  --warning: var(--feedback-warning);
+  --warning-bg: var(--feedback-warning-subtle);
+  --info: var(--feedback-info);
+  --info-bg: var(--feedback-info-subtle);
+  --success: var(--feedback-success);
+  --success-bg: var(--feedback-success-subtle);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -35,29 +148,65 @@
 }
 
 @theme inline {
-  --color-app-bg: var(--app-bg);
-  --color-sidebar-bg: var(--sidebar-bg);
+  /* New semantic utilities — e.g. bg-surface-primary, text-primary,
+     border-subtle, text-critical */
+  --color-page: var(--page-background);
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+  --color-surface-disabled: var(--surface-disabled);
 
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-tertiary: var(--text-tertiary);
+  --color-muted: var(--text-muted);
+  --color-disabled: var(--text-disabled);
+  --color-on-color: var(--text-on-color);
+  --color-on-light: var(--text-on-light);
+
+  --color-subtle: var(--stroke-subtle);
+  --color-default: var(--stroke-default);
+  --color-strong: var(--stroke-strong);
+
+  --color-action-primary: var(--action-primary);
+  --color-action-primary-hover: var(--action-primary-hover);
+  --color-action-primary-active: var(--action-primary-active);
+  --color-action-primary-text: var(--action-primary-text);
+  --color-action-secondary: var(--action-secondary);
+  --color-action-secondary-hover: var(--action-secondary-hover);
+  --color-action-secondary-text: var(--action-secondary-text);
+  --color-action-disabled: var(--action-disabled);
+
+  --color-critical: var(--feedback-critical);
+  --color-critical-subtle: var(--feedback-critical-subtle);
+  --color-warning: var(--feedback-warning);
+  --color-warning-subtle: var(--feedback-warning-subtle);
+  --color-success: var(--feedback-success);
+  --color-success-subtle: var(--feedback-success-subtle);
+  --color-info: var(--feedback-info);
+  --color-info-subtle: var(--feedback-info-subtle);
+  --color-highlight: var(--feedback-highlight);
+
+  /* Legacy utilities (Prompt 1/2), still generated for the unmounted
+     dashboard components — e.g. bg-surface-1, text-text-primary,
+     bg-critical-bg, bg-app-bg */
+  --color-app-bg: var(--page-background);
+  --color-sidebar-bg: var(--page-background);
   --color-background: var(--background);
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
-  --color-surface-hover: var(--surface-hover);
-
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-
-  --color-critical: var(--critical);
   --color-critical-bg: var(--critical-bg);
-  --color-warning: var(--warning);
   --color-warning-bg: var(--warning-bg);
-  --color-info: var(--info);
   --color-info-bg: var(--info-bg);
-  --color-success: var(--success);
   --color-success-bg: var(--success-bg);
 
   --radius-sm: var(--radius-sm);
@@ -69,11 +218,11 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--page-background);
   color: var(--text-primary);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
-  border-color: var(--border);
+  border-color: var(--stroke-subtle);
 }
