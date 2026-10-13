@@ -16,8 +16,8 @@ export function SidebarItem({ icon: Icon, label, active, onClick }: SidebarItemP
       title={label}
       className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200 ${
         active
-          ? "bg-[#f1f1f1] text-[#151515]"
-          : "bg-white/[0.06] text-white/50 hover:bg-white/[0.1] hover:text-white/70"
+          ? "bg-action-primary text-action-primary-text"
+          : "bg-surface-secondary text-secondary hover:bg-surface-elevated hover:text-primary"
       }`}
     >
       <Icon size={17} strokeWidth={1.75} />
