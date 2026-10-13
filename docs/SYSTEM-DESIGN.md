@@ -2,7 +2,7 @@
 
 This document is the running record of all system design prompts supplied for Vahana, their requirements, conflicts, and implementation status. Updated after every prompt per project rules established 2026-10-13.
 
-No reference screenshots have been attached to any prompt so far (Prompt 1 or Prompt 2). All visual work is derived from written specs only. This is a standing limitation, not a resolved issue — flag again if a future prompt also omits its image.
+No reference screenshots have been attached to any prompt so far (Prompts 1 through 4). All visual work is derived from written specs only. This is a standing limitation, not a resolved issue — flag again if a future prompt also omits its image.
 
 ---
 
@@ -66,6 +66,29 @@ components/layout/
 
 **Status: implemented, build/lint/typecheck clean, audited for hardcoded colors. Safe to proceed to Prompt 4.**
 
+## Prompt 4 of 5 — color architecture v2, semantic tokens, typography system
+
+**Scope:** Full reference palette (gray 16-step + 10 color families), a richer semantic layer (text/icon/stroke/surface/action-surface/feedback, each following Object → Role → Element → State), and a two-typeface system (Michroma for display/identity, Geist for functional UI) with a semantic type scale. Update only AppShell, Sidebar, SidebarItem, and global typography — no layout or dashboard-content changes.
+
+**No reference screenshots attached** (4th prompt in a row without one). Proceeded from the written spec, consistent with the user's standing direction.
+
+**Conflict identified — Prompt 4 explicitly supersedes Prompt 3's token architecture, not an ambiguous conflict requiring a decision:** Prompt 4's own "FINAL MIGRATION" section instructs searching for and migrating hardcoded/legacy values, and its "Part I/II" headers fully re-specify the reference palette and semantic surface/action naming that Prompt 3 introduced one prompt earlier (e.g. `surface.primary/secondary/tertiary/elevated` → `surface.container/raised/raised-x2/action`; `--ref-gray-0..1000` 16-step scale → a differently-stepped 16-step scale; `stroke.subtle/default/strong` → `stroke.muted/default/active`). Treated as an intentional, explicit replacement and proceeded without blocking, per the project's "continue phase by phase" instruction — logged here rather than silently absorbed.
+- Prompt 3's token values/names are fully replaced in `app/globals.css`.
+- Prompt 3's shorter utility aliases that nothing outside `components/layout/*` depended on (`bg-surface-primary/secondary/tertiary/elevated`, `border-subtle/default/strong` as previously defined) were removed rather than kept alongside the new system, since keeping two parallel "new" systems would recreate exactly the scattered-token problem both prompts are trying to eliminate.
+- Prompt 1/2's legacy var names (`--background`, `--surface-1/2/3`, `--border`, `--critical`, etc.) are still preserved as aliases, now pointing at the Prompt 4 tokens, so the unmounted dashboard components keep rendering unchanged.
+- Per Prompt 4's explicit "FEEDBACK COLOR USAGE" mapping, the legacy "Info" severity (previously a neutral gray in Prompt 1) now resolves to `feedback.info` (blue) — a visible color change for the unmounted `StatusBadge`/`action-table` "Info" rows whenever that code is reactivated.
+
+**Implementation:**
+- `app/layout.tsx`: added Michroma via `next/font/google` (weight 400 only), reused the existing Geist loading. `body` now uses `bg-page text-primary font-sans`.
+- `app/globals.css`: full Tier 1 reference palette + Tier 2 semantic tokens (text ×5, icon ×5, stroke ×5, surface ×6, action-surface primary/secondary/tertiary ×4 states each, feedback ×5 categories ×4 properties) + semantic type scale (`display-page`, `display-metric(-xl)`, `heading-lg/md/sm`, `body-lg/md/sm`, `label-md/sm`, `caption`) as Tailwind `text-*` size tokens pairing with `font-display`/`font-sans`.
+- `components/layout/sidebar.tsx`: `bg-page` → `bg-container`, `border-subtle` → `border-muted`.
+- `components/layout/sidebar-item.tsx`: inactive `bg-surface-secondary`/`text-secondary` → `bg-action`/`text-icon-tertiary`; hover `bg-surface-elevated`/`text-primary` → `bg-raised`/`text-icon-secondary`; active icon `text-action-primary-text` → `text-icon-on-color`.
+- `app/page.tsx`: temp heading now `font-display text-display-page text-primary` — the exact example given in the prompt.
+
+**Known gap — icon utilities aren't literally named `icon-primary` etc.:** Tailwind has no bare "icon" utility category; the requested `icon-primary/secondary/tertiary/quaternary` tokens are implemented as dedicated `--color-icon-*` CSS variables, applied in components via the generated `text-icon-*` utilities (SVGs inherit via `currentColor`). Functionally equivalent, but the class name in JSX reads `text-icon-tertiary`, not `icon-tertiary`.
+
+**Status: implemented, build/lint/typecheck clean, visually verified (page essentially black, sidebar barely elevated, active nav = light-gray/dark-icon, hover = subtle raised, Michroma renders distinctly from Geist). Safe to proceed to Prompt 5.**
+
 ## Requirement Traceability Matrix
 
 | Req | Source | Module | Status | Verification |
@@ -84,7 +107,13 @@ components/layout/
 | Tier 2 semantic tokens (page/surface/text/icon/stroke/action/feedback) | Prompt 3 | `app/globals.css` | Complete | Build + grep audit |
 | Tailwind semantic utility integration | Prompt 3 | `app/globals.css` (`@theme inline`) | Complete | Build |
 | Migrate AppShell/Sidebar/SidebarItem/page.tsx off hardcoded colors | Prompt 3 | `components/layout/*`, `app/page.tsx` | Complete | grep audit (0 remaining in mounted code) |
-| Migrate unmounted Prompt 1 dashboard components to new tokens | Prompt 3 (deferred) | `components/dashboard/*` | Not started — out of scope until reactivated | — |
+| Migrate unmounted Prompt 1 dashboard components to new tokens | Prompt 3/4 (deferred) | `components/dashboard/*` | Not started — out of scope until reactivated | — |
+| Full reference palette (11 families) | Prompt 4 | `app/globals.css` | Complete | Build + grep audit |
+| Semantic tokens: text/icon/stroke/surface/action-surface/feedback | Prompt 4 | `app/globals.css` | Complete | Build + grep audit |
+| Michroma font loading | Prompt 4 | `app/layout.tsx` | Complete | Build + visual |
+| Geist confirmed as functional UI font | Prompt 4 | `app/layout.tsx` (pre-existing) | Complete | Visual |
+| Semantic type scale (display/heading/body/label/caption) | Prompt 4 | `app/globals.css` | Complete | Build; only `display-page` applied so far (temp heading) |
+| Migrate AppShell/Sidebar/SidebarItem/page.tsx to Prompt 4 tokens | Prompt 4 | `components/layout/*`, `app/page.tsx` | Complete | grep audit (0 hardcoded colors in mounted code) |
 
 ## Implementation Checklist (current)
 
