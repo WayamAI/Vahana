@@ -61,6 +61,7 @@ import {
   faStar,
   faMinus,
   faCloud,
+  faCircleHalfStroke,
 } from "@fortawesome/free-solid-svg-icons";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
@@ -128,6 +129,7 @@ export const icons = {
   sparkle: faStar, // faSparkles isn't in the free tier; faStar is the closest available glyph
   minus: faMinus,
   cloud: faCloud,
+  theme: faCircleHalfStroke,
 } as const satisfies Record<string, IconDefinition>;
 
 export type IconName = keyof typeof icons;
