@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SidebarItem } from "@/components/layout/sidebar-item";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { IconButton } from "@/components/ui/icon-button";
 import type { IconName } from "@/lib/icons";
 
@@ -35,15 +36,7 @@ export function Sidebar() {
       </nav>
 
       <div className="flex flex-col items-center gap-2">
-        <IconButton
-          icon="theme"
-          label="Light mode (coming soon)"
-          variant="subtle"
-          shape="circle"
-          iconSize="lg"
-          disabled
-          className="cursor-not-allowed opacity-40"
-        />
+        <ThemeToggle />
         <IconButton
           icon="settings"
           label="Settings (coming soon)"
