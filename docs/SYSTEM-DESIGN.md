@@ -170,6 +170,28 @@ This pass completed the "next step" above: the full Prompt 1 dashboard was migra
 
 **Not done / explicitly out of scope**: no backend exists, so no real API integration was attempted — all data remains clearly-labeled placeholder. Pagination and the column-visibility/drag-reorder/CSV-export features from Chronos's full `data-table.tsx` were not added (disproportionate to a 6-row placeholder dataset, flagged in `docs/CHRONOS-REFERENCE.md` as a future addition once real data justifies it). No login/auth screen exists in Vahana yet, so the wordmark variants aren't placed anywhere beyond being copied into `public/brand/`.
 
+---
+
+## Post-reactivation functionality pass (navigation, map, theme, release audit)
+
+Driven by user feedback that everything besides the dashboard content was non-functional (dead sidebar nav, dead incident-panel buttons, placeholder map grid) and a request for light mode and mobile verification. Commits `36d0869`..`ba9244f`, then this release audit.
+
+**Light/dark theme**: the Tier 2 token architecture already anticipated a `:root[data-theme="light"]` override block (per the Prompt 3 comment); this pass actually wrote it — full remap of text/icon/stroke/surface/action/feedback onto the same Tier 1 palette — and wired a real toggle (`lib/theme.ts`, `components/layout/theme-toggle.tsx`), persisted to `localStorage`, applied pre-hydration via an inline script in `app/layout.tsx` to avoid a flash of the wrong theme (`suppressHydrationWarning` on `<html>` since that script intentionally changes `data-theme` before React hydrates — the standard pattern).
+
+**Bug found while wiring light mode**: `--stroke-focus` was referenced by the `ring-focus` Tailwind utility (added in the earlier a11y commits, `f780372`) but never actually defined anywhere — every focus ring from that pass was rendering invisible. Fixed in both themes.
+
+**Real fleet map**: replaced `MapStage`'s static grid texture with `react-leaflet` + standard OpenStreetMap tiles (the dark CARTO tileset now requires an API key), inverted via CSS in dark theme to match. Plots each `actionRows` entry at a simulated lat/lng, colored by severity, with a popup. Caption reads "Simulated positions — not live telemetry" — never represented as real GPS.
+
+**Real sidebar navigation**: the sidebar previously only toggled a local "active" highlight with no routing underneath — none of Vehicles/Alerts/Calendar/Maintenance/Documents went anywhere. Added real routes (`app/vehicles`, `app/alerts`, `app/calendar`, `app/maintenance`, `app/documents`), each `AppShell`-wrapped and built from the existing `actionRows` placeholder data (Alerts reuses `ActionQueue` directly), with `next/link` + `usePathname` driving active state (`components/layout/sidebar-nav-link.tsx`). Documents has no backing data source, so it's an honest empty state rather than a fake list.
+
+**Incident panel buttons made functional**: Confirm Evacuation / View Profile / Insurance Claim were static buttons with no handler. Now real client-side demo interactions (toggle-to-confirmed state, inline profile expansion, generated demo claim reference) — explicitly labeled as demo since no backend exists to actually evacuate anyone or file a claim.
+
+**Production-breaking bug found and fixed**: adding the map surfaced a crash — navigating away from the Dashboard route and back threw a Leaflet runtime error (`Cannot read properties of undefined (reading 'appendChild')`) inside `TileLayer`, reproduced in a production build (`next build && next start`), not just dev. Root cause was `cacheComponents`/`partialPrefetching` (Next 16 experimental flags) in `next.config.ts` interfering with how the map's DOM is torn down and rebuilt across client-side navigation. Neither flag was needed by anything in this app; removed. Verified via repeated Dashboard → other route → Dashboard cycling against a production build with a clean console both times.
+
+**Verification this pass**: `npm run lint`, `npx tsc --noEmit`, `npm run build` all pass. Live-tested in a production build: all 6 routes navigate and render real data, table search/sort/selection (including selection surviving a search-then-clear and a sort) all confirmed working, theme toggle persists correctly across a full page reload with no hydration error, network tab shows zero failed requests (all map tiles, fonts, and brand assets 200/304) across the whole session. Chronos-pattern and branding-asset claims from the prior section were independently spot-checked against the actual Chronos source and Vahana's `action-table.tsx`/`app-shell.tsx` — sort-cycle, sticky header, and row-hover styling are genuinely matched; the two wordmark SVGs remain copied into `public/brand/` but unreferenced in code, consistent with what the branding section above already says (no surface exists yet that needs a full wordmark).
+
+**Known limitation, unchanged from before**: mobile/tablet viewport behavior still can't be verified through this session's browser automation — `resize_window` reports success but `window.innerWidth` never actually changes, a tool-level limitation, not an app bug. Responsive classes were instead audited directly in the component source (table `overflow-x-auto`, filter-chip `flex-wrap`, incident panel `hidden lg:flex`, Health Score card capped at `max-w-[calc(100%-2rem)]`) and one real overflow bug found that way was fixed (`0753b9b`). Verify narrow widths with the browser's own DevTools device toolbar.
+
 ## Requirement Traceability Matrix
 
 ## Implementation Checklist (current)
