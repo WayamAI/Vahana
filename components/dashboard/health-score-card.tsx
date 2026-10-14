@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppIcon } from "@/components/ui/app-icon";
 import { healthSummary } from "@/lib/placeholder-data";
 
@@ -14,7 +15,9 @@ export function HealthScoreCard() {
         </div>
         <button
           type="button"
-          className="flex items-center gap-1 rounded-md border border-muted px-2 py-1 text-caption text-secondary hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          disabled
+          title="Only today's data is available in this demo"
+          className="flex cursor-not-allowed items-center gap-1 rounded-md border border-muted px-2 py-1 text-caption text-secondary opacity-60"
         >
           Today
           <AppIcon name="chevronDown" size="xs" aria-hidden />
@@ -55,12 +58,12 @@ export function HealthScoreCard() {
         </span>
       </div>
 
-      <button
-        type="button"
-        className="mt-3 w-full rounded-md border border-muted py-1.5 text-label-sm text-secondary transition-colors duration-200 hover:bg-raised hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+      <Link
+        href="/vehicles"
+        className="mt-3 block w-full rounded-md border border-muted py-1.5 text-center text-label-sm text-secondary transition-colors duration-200 hover:bg-raised hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
       >
         See all assets
-      </button>
+      </Link>
     </div>
   );
 }
