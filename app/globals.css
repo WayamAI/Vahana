@@ -176,6 +176,7 @@
   --stroke-muted: rgba(255, 255, 255, 0.08);
   --stroke-disabled: rgba(255, 255, 255, 0.04);
   --stroke-on-color: rgba(0, 0, 0, 0.18);
+  --stroke-focus: var(--ref-blue-400);
 
   /* Surface — extremely close dark-gray layers, no big contrast jumps */
   --surface-page-background: var(--ref-black);
@@ -265,6 +266,87 @@
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================================================================
+   TIER 2 — SEMANTIC TOKENS (light mode override)
+   Same names as the dark block above, remapped onto the Tier 1 palette.
+   Nothing outside this block changes — every component already consumes
+   the semantic custom properties through `@theme inline`, so flipping
+   `data-theme` on <html> repaints the whole app with zero component edits.
+   ========================================================================== */
+:root[data-theme="light"] {
+  --text-primary: var(--ref-gray-950);
+  --text-secondary: var(--ref-gray-700);
+  --text-tertiary: var(--ref-gray-550);
+  --text-quaternary: var(--ref-gray-400);
+  --text-on-color: var(--ref-white);
+
+  --icon-primary: var(--ref-gray-950);
+  --icon-secondary: var(--ref-gray-700);
+  --icon-tertiary: var(--ref-gray-550);
+  --icon-quaternary: var(--ref-gray-400);
+  --icon-on-color: var(--ref-white);
+
+  --stroke-default: rgba(0, 0, 0, 0.12);
+  --stroke-active: rgba(0, 0, 0, 0.22);
+  --stroke-muted: rgba(0, 0, 0, 0.07);
+  --stroke-disabled: rgba(0, 0, 0, 0.04);
+  --stroke-on-color: rgba(255, 255, 255, 0.24);
+  --stroke-focus: var(--ref-blue-600);
+
+  --surface-page-background: var(--ref-white);
+  --surface-container: var(--ref-gray-50);
+  --surface-raised: var(--ref-gray-100);
+  --surface-raised-x2: var(--ref-gray-200);
+  --surface-action: var(--ref-gray-100);
+  --surface-scroll-bar: var(--ref-gray-300);
+
+  --action-primary-default: var(--ref-gray-950);
+  --action-primary-hover: var(--ref-gray-800);
+  --action-primary-focused: var(--ref-black);
+  --action-primary-disabled: var(--ref-gray-300);
+  --action-primary-content: var(--ref-white);
+
+  --action-secondary-default: var(--ref-gray-100);
+  --action-secondary-hover: var(--ref-gray-200);
+  --action-secondary-focused: var(--ref-gray-300);
+  --action-secondary-disabled: var(--ref-gray-50);
+  --action-secondary-content: var(--text-primary);
+
+  --action-tertiary-default: transparent;
+  --action-tertiary-hover: rgba(0, 0, 0, 0.05);
+  --action-tertiary-focused: rgba(0, 0, 0, 0.09);
+  --action-tertiary-disabled: transparent;
+  --action-tertiary-content: var(--text-primary);
+
+  --feedback-success-content: var(--ref-green-700);
+  --feedback-success-icon: var(--ref-green-600);
+  --feedback-success-stroke: var(--ref-green-300);
+  --feedback-success-background: rgba(63, 174, 105, 0.12);
+
+  --feedback-info-content: var(--ref-blue-700);
+  --feedback-info-icon: var(--ref-blue-600);
+  --feedback-info-stroke: var(--ref-blue-300);
+  --feedback-info-background: rgba(44, 150, 219, 0.12);
+
+  --feedback-neutral-content: var(--ref-gray-700);
+  --feedback-neutral-icon: var(--ref-gray-550);
+  --feedback-neutral-stroke: var(--ref-gray-300);
+  --feedback-neutral-background: rgba(0, 0, 0, 0.05);
+
+  --feedback-warning-content: var(--ref-orange-700);
+  --feedback-warning-icon: var(--ref-orange-600);
+  --feedback-warning-stroke: var(--ref-orange-300);
+  --feedback-warning-background: rgba(255, 123, 28, 0.12);
+
+  --feedback-error-content: var(--ref-red-700);
+  --feedback-error-icon: var(--ref-red-600);
+  --feedback-error-stroke: var(--ref-red-300);
+  --feedback-error-background: rgba(255, 65, 73, 0.12);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* ==========================================================================
