@@ -6,7 +6,7 @@ export function HealthScoreCard() {
   const total = healthy + warning + critical;
 
   return (
-    <div className="absolute left-4 top-4 w-[260px] max-w-[calc(100%-2rem)] rounded-lg border border-muted bg-container/90 p-4 backdrop-blur-sm">
+    <div className="absolute left-4 top-4 z-[1000] w-[260px] max-w-[calc(100%-2rem)] rounded-lg border border-muted bg-container/90 p-4 backdrop-blur-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-label-sm text-secondary">
           Health Score

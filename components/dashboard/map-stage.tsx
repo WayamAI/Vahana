@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
+import { FleetMap } from "@/components/dashboard/fleet-map";
 
 export function MapStage({ children }: { children?: ReactNode }) {
   return (
-    <div className="relative h-[320px] w-full overflow-hidden rounded-lg border border-muted bg-raised">
-      <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--stroke-muted)_1px,transparent_1px),linear-gradient(90deg,var(--stroke-muted)_1px,transparent_1px)] [background-size:28px_28px]" />
-      <p className="absolute right-4 bottom-3 text-caption text-tertiary">
-        Live map view not yet connected
+    <div className="relative z-0 h-[320px] w-full overflow-hidden rounded-lg border border-muted bg-raised">
+      <FleetMap />
+      <p className="pointer-events-none absolute right-4 bottom-3 z-[1000] rounded bg-container/80 px-2 py-1 text-caption text-tertiary backdrop-blur-sm">
+        Simulated positions — not live telemetry
       </p>
       {children}
     </div>

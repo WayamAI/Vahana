@@ -17,6 +17,9 @@ export interface ActionRow {
   description: string;
   time: string;
   driver: string;
+  /** Simulated last-known position (demo data — see file header). */
+  lat: number;
+  lng: number;
 }
 
 export const actionRows: ActionRow[] = [
@@ -27,6 +30,8 @@ export const actionRows: ActionRow[] = [
     description: "Critical telemetry anomaly detected — engine temperature spike",
     time: "08:42",
     driver: "Mike Ross",
+    lat: 41.676,
+    lng: -87.978,
   },
   {
     id: "SIM-0014",
@@ -35,6 +40,8 @@ export const actionRows: ActionRow[] = [
     description: "Coolant level below threshold",
     time: "08:21",
     driver: "Alina Chen",
+    lat: 41.525,
+    lng: -88.312,
   },
   {
     id: "SIM-0022",
@@ -43,6 +50,8 @@ export const actionRows: ActionRow[] = [
     description: "Tire pressure deviation on axle 2",
     time: "07:58",
     driver: "Devon Ortiz",
+    lat: 41.84,
+    lng: -87.62,
   },
   {
     id: "SIM-0031",
@@ -51,6 +60,8 @@ export const actionRows: ActionRow[] = [
     description: "Scheduled maintenance window approaching",
     time: "07:40",
     driver: "Priya Nair",
+    lat: 41.978,
+    lng: -87.9,
   },
   {
     id: "SIM-0040",
@@ -59,6 +70,8 @@ export const actionRows: ActionRow[] = [
     description: "Route deviation logged",
     time: "07:12",
     driver: "Sam Walker",
+    lat: 41.754,
+    lng: -88.147,
   },
   {
     id: "SIM-0052",
@@ -67,6 +80,8 @@ export const actionRows: ActionRow[] = [
     description: "Battery voltage fluctuation",
     time: "06:55",
     driver: "Jordan Lee",
+    lat: 41.608,
+    lng: -87.731,
   },
 ];
 

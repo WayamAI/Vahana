@@ -556,3 +556,10 @@ body {
   border: 2px solid transparent;
   background-clip: content-box;
 }
+
+/* FleetMap uses standard (light) OSM tiles since the dark CARTO tileset now
+   requires an API key. Invert them to match the dark theme instead of
+   paying for a key for a demo map. Light theme keeps the tiles as-is. */
+:root[data-theme="dark"] .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9);
+}
