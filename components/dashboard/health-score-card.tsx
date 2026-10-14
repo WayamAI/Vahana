@@ -6,7 +6,7 @@ export function HealthScoreCard() {
   const total = healthy + warning + critical;
 
   return (
-    <div className="absolute left-4 top-4 w-[260px] rounded-lg border border-muted bg-container/90 p-4 backdrop-blur-sm">
+    <div className="absolute left-4 top-4 w-[260px] max-w-[calc(100%-2rem)] rounded-lg border border-muted bg-container/90 p-4 backdrop-blur-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-label-sm text-secondary">
           Health Score
@@ -40,7 +40,7 @@ export function HealthScoreCard() {
         <div className="bg-error" style={{ width: `${(critical / total) * 100}%` }} />
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-caption text-secondary">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 text-caption text-secondary">
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-success" />
           Healthy: <span className="tabular-nums text-primary">{healthy}</span>
