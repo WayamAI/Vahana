@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SidebarItem } from "@/components/layout/sidebar-item";
+import { IconButton } from "@/components/ui/icon-button";
 import type { IconName } from "@/lib/icons";
 
 const NAV_ITEMS: { icon: IconName; label: string }[] = [
@@ -34,8 +35,24 @@ export function Sidebar() {
       </nav>
 
       <div className="flex flex-col items-center gap-2">
-        <SidebarItem icon="theme" label="Theme" />
-        <SidebarItem icon="settings" label="Settings" />
+        <IconButton
+          icon="theme"
+          label="Light mode (coming soon)"
+          variant="subtle"
+          shape="circle"
+          iconSize="lg"
+          disabled
+          className="cursor-not-allowed opacity-40"
+        />
+        <IconButton
+          icon="settings"
+          label="Settings (coming soon)"
+          variant="subtle"
+          shape="circle"
+          iconSize="lg"
+          disabled
+          className="cursor-not-allowed opacity-40"
+        />
       </div>
     </aside>
   );
