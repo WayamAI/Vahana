@@ -7,10 +7,14 @@ export default function VehiclesPage() {
   return (
     <AppShell>
       <div className="h-full w-full overflow-y-auto">
-        <PageHeader title="Vehicles" />
+        <PageHeader
+          title="Vehicles"
+          subtitle={`Showing ${actionRows.length} vehicles with recent activity — not the full fleet shown in Health Score.`}
+        />
 
         <div className="px-6 pb-6">
           <section className="overflow-x-auto rounded-lg border border-muted bg-container">
+            <h2 className="sr-only">Vehicle list</h2>
             <table className="w-full min-w-[640px] text-left text-body-sm">
               <thead>
                 <tr className="border-b border-muted bg-container text-caption uppercase tracking-[0.08em] text-tertiary">

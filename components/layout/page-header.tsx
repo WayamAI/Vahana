@@ -1,6 +1,6 @@
 import { AppIcon } from "@/components/ui/app-icon";
 
-export function PageHeader({ title }: { title: string }) {
+export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <header className="px-6 pt-6 pb-4">
       <div className="flex items-center gap-1.5 text-caption text-tertiary">
@@ -9,6 +9,7 @@ export function PageHeader({ title }: { title: string }) {
         <span>{title}</span>
       </div>
       <h1 className="mt-2 font-display text-display-page text-primary">{title}</h1>
+      {subtitle && <p className="mt-1 text-body-sm text-tertiary">{subtitle}</p>}
     </header>
   );
 }
