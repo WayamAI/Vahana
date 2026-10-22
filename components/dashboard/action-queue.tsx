@@ -55,7 +55,7 @@ export function ActionQueue() {
       <div className="flex items-center justify-between gap-3 px-4 py-3.5">
         <h2 className="min-w-0 flex-shrink truncate text-heading-sm text-primary">
           Action Needed Queue{" "}
-          <span className="tabular-nums text-tertiary">({actionRows.length})</span>
+          <span className="tabular-nums text-tertiary">({visibleRows.length})</span>
         </h2>
         <div className="relative w-full max-w-[12rem] flex-shrink-0">
           <AppIcon
