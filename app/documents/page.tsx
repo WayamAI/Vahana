@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { AppIcon } from "@/components/ui/app-icon";
+
+export const metadata: Metadata = {
+  title: "Documents | Vahana",
+};
 
 export default function DocumentsPage() {
   return (
