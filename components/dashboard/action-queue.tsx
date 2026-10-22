@@ -52,8 +52,8 @@ export function ActionQueue() {
 
   return (
     <section className="rounded-lg border border-muted bg-container">
-      <div className="flex items-center justify-between gap-3 px-4 py-3.5">
-        <h2 className="min-w-0 flex-shrink truncate text-heading-sm text-primary">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3.5">
+        <h2 className="min-w-0 text-heading-sm text-primary">
           Action Needed Queue{" "}
           <span className="tabular-nums text-tertiary">({visibleRows.length})</span>
         </h2>
