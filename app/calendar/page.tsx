@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/layout/page-header";
 import { actionRows } from "@/lib/placeholder-data";
+
+export const metadata: Metadata = {
+  title: "Calendar | Vahana",
+};
 
 export default function CalendarPage() {
   const agenda = [...actionRows].sort((a, b) => a.time.localeCompare(b.time));
