@@ -38,3 +38,43 @@ this file is the quick index.
   `eslint-config-next`'s transitive `fast-glob`/`braces`/`micromatch`) — these require major
   version bumps, affect dev-only tooling never shipped to production, and were outside this
   remediation's scope.
+
+## 2026-10-23 — Chronos design-parity pass (tokens, sidebar, badges)
+
+Compared Vahana against `Chronos` (primary design reference) plus `Drishti-bridge-to-live`
+and `sama-BOM_sync` (orange-branding/icon conventions), all on this machine, read-only.
+Key finding that reshaped scope: **neither Chronos nor the secondary refs apply orange as a
+general icon accent** — orange is reserved for `feedback-warning-*` semantic tokens and brand
+marks only; icons stay neutral everywhere else. Vahana already followed this exact rule, so
+no "orange icon migration" was performed — applying orange broadly would have actively
+diverged from all three references.
+
+- `64cde1b` style(badges): switched `StatusBadge` from tinted/subtle backgrounds to Chronos's
+  solid-fill treatment (`--feedback-{x}-badge`, reusing the existing Tier-1 ramp which already
+  matches Chronos hex-for-hex) + white text. Verified in both themes on Dashboard/Vehicles.
+- `32cebc5` style(sidebar): sidebar nav icon puck 40px → 36px, matching Chronos's `size-9`.
+
+### Deliberately not changed (evidence-based, documented here per Phase 8)
+- **Icon library (Font Awesome solid → lucide stroke)**: Chronos uses lucide; Vahana uses
+  Font Awesome Free solid, a decision already made and explicitly justified in
+  `lib/icons.ts`'s header comment (Free's "regular"/outline style lacks required glyphs).
+  Re-wiring the entire icon system is a large, high-risk rewrite with no reported defect
+  behind it — a visual-weight preference, not a bug. Out of scope for this pass.
+  `lib/icons.ts` was re-audited: all icons route through the one central registry, zero
+  emoji/stray inline SVGs/bypassing imports found anywhere in the app.
+- **Page title size** (`--text-display-page: 36px` vs Chronos's 18–22px): Vahana's large
+  Michroma display-font page titles are an established, deliberate brand treatment used
+  consistently across all 6 routes, not a bug. Halving it would be a significant unrequested
+  redesign of the primary visual identity — explicitly out of scope ("do not perform an
+  unrelated visual redesign").
+- **Focus-ring color** (Vahana's blue `--stroke-focus` vs Chronos's low-contrast neutral
+  `stroke-active`): Vahana's distinct, higher-contrast focus color was a deliberate a11y fix
+  in a prior session (see `RELEASE_AUDIT.md`'s `bcab5fe`). Matching Chronos's dimmer neutral
+  ring would risk reintroducing that regression — retained.
+- **Page-header breadcrumb**: Chronos's `PageHeader` has none; Vahana's does. Retained as a
+  genuine navigational/accessibility feature, not removed for parity's sake.
+- Sidebar hover-state color gradation (Chronos: tertiary→secondary two-step; Vahana:
+  secondary→primary) — cosmetic nuance, low confidence this is worth the diff; not changed.
+
+CI green on both commits (`39930278371`, `39954178625`). Deployed via `vercel --prod`
+(`dpl_2WDNJpUV4mZUFdFqtkDdUsWywD5c`), verified live on `/vehicles` in both themes.
