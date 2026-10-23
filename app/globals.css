@@ -233,6 +233,13 @@
   --feedback-error-stroke: var(--ref-red-700);
   --feedback-error-background: rgba(255, 65, 73, 0.12);
 
+  /* Solid-fill badge tones (Chronos parity: badges use a saturated solid
+     background + white text, not the tinted -subtle pairs above) */
+  --feedback-info-badge: var(--ref-blue-800);
+  --feedback-warning-badge: var(--ref-orange-800);
+  --feedback-error-badge: var(--ref-red-800);
+  --feedback-badge-content: var(--ref-white);
+
   /* ------------------------------------------------------------------
      Legacy aliases (Prompt 1) — kept so the preserved-but-unmounted
      dashboard components (components/dashboard/*, components/ui/*) keep
@@ -345,6 +352,10 @@
   --feedback-error-stroke: var(--ref-red-300);
   --feedback-error-background: rgba(255, 65, 73, 0.12);
 
+  --feedback-info-badge: var(--ref-blue-700);
+  --feedback-warning-badge: var(--ref-orange-700);
+  --feedback-error-badge: var(--ref-red-700);
+
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.08);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -436,6 +447,11 @@
   --color-error: var(--feedback-error-content);
   --color-error-icon: var(--feedback-error-icon);
   --color-error-subtle: var(--feedback-error-background);
+
+  --color-info-badge: var(--feedback-info-badge);
+  --color-warning-badge: var(--feedback-warning-badge);
+  --color-error-badge: var(--feedback-error-badge);
+  --color-badge: var(--feedback-badge-content);
 
   /* Legacy color utilities (Prompt 1/2), still generated for the
      unmounted dashboard components */

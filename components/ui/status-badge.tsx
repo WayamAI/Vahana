@@ -1,9 +1,9 @@
 import type { Severity } from "@/lib/placeholder-data";
 
 const BADGE_CLASS: Record<Severity, string> = {
-  critical: "bg-error-subtle text-error",
-  warning: "bg-warning-subtle text-warning",
-  info: "bg-info-subtle text-info",
+  critical: "bg-error-badge text-badge",
+  warning: "bg-warning-badge text-badge",
+  info: "bg-info-badge text-badge",
 };
 
 export function StatusBadge({ severity, label }: { severity: Severity; label?: string }) {
