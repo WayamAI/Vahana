@@ -23,7 +23,7 @@ export function SidebarNavLink({
       aria-label={label}
       aria-current={active ? "page" : undefined}
       title={label}
-      className={`inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-page ${
+      className={`inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-page ${
         active
           ? "bg-action-primary text-icon-on-color"
           : "bg-action text-icon-secondary hover:bg-raised hover:text-icon-primary"
