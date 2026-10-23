@@ -21,3 +21,20 @@ this file is the quick index.
 - Project owner confirmed scope: **frontend only, no backend this phase.**
 - `7977115`, `17ec17c`, `36b826c` docs: KNOWN_LIMITATIONS / ARCHITECTURE (unbuilt
   reference) / IMPLEMENTATION_ROADMAP added.
+
+## 2026-10-23 — Security remediation (Next.js critical RCE advisories)
+
+- `585911a` fix(security): upgrade Next.js 16.4.0 → 16.4.2, fixing three advisories affecting
+  16.0.0–16.4.0: [GHSA-2464-fhr4-w9xw](https://github.com/advisories/GHSA-2464-fhr4-w9xw)
+  (critical, unauthenticated RCE via SVG in the Image Optimization API),
+  [GHSA-673q-mjm6-r5xr](https://github.com/advisories/GHSA-673q-mjm6-r5xr) (critical,
+  unauthenticated RCE in `use cache` functions returning typed arrays), and
+  [GHSA-p3m5-59mp-jv5r](https://github.com/advisories/GHSA-p3m5-59mp-jv5r) (high, DoS in
+  App Router Server Actions). `eslint-config-next` bumped in lockstep to stay compatible.
+  Confirmed via `npm audit` that `next` no longer appears as vulnerable; build no longer
+  emits the prior security-advisory warning. CI green on run `39928746126`. Deployed to
+  production via `vercel --prod` (manual deploy — see Known Limitations) and verified live.
+- Did not touch unrelated pre-existing dev-tooling advisories (`vitest`/`@vitest/mocker`,
+  `eslint-config-next`'s transitive `fast-glob`/`braces`/`micromatch`) — these require major
+  version bumps, affect dev-only tooling never shipped to production, and were outside this
+  remediation's scope.
